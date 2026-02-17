@@ -158,8 +158,8 @@ a {
 }
 
 .logo {
-  width: 36px;
-  height: 36px;
+  width: 45%;
+  height: auto;
   object-fit: contain;
 
 }
@@ -261,13 +261,136 @@ a {
   border-color: rgba(0, 102, 204, 0.3);
 }
 
-/* Main Card Content */
+/* Main Card Content (Slideshow Grid Stacking) */
 .bento-main {
   background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  /* Changed from grid to flex to hold the slides-container properly */
+  flex-direction: column;
+}
+
+.slides-container {
+  width: 100%;
+  position: relative;
+  display: grid;
+  /* Enable Grid */
+  grid-template-areas: "stack";
+  /* visual name for the area */
+}
+
+.slide {
+  grid-area: stack;
+  /* Stack all slides on top of each other */
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease-in-out, visibility 0.6s;
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   align-items: center;
   padding: 3rem;
+  /* Ensure acts as a container */
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+  position: relative;
+  /* Keep relative so it dictates height if needed, though grid handles it */
+}
+
+/* Animations for slide content */
+.slide .bento-content {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.6s ease-out 0.2s, opacity 0.6s ease-out 0.2s;
+}
+
+.slide.active .bento-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide .bento-image-main {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.8s ease-out 0.2s, opacity 0.8s ease-out 0.2s;
+}
+
+.slide.active .bento-image-main {
+  transform: scale(1);
+  opacity: 1;
+}
+
+
+/* Controls */
+.slide-prev,
+.slide-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  color: var(--primary);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  opacity: 0;
+}
+
+.bento-main:hover .slide-prev,
+.bento-main:hover .slide-next {
+  opacity: 1;
+}
+
+.slide-prev:hover,
+.slide-next:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.slide-prev {
+  left: 1rem;
+}
+
+.slide-next {
+  right: 1rem;
+}
+
+/* Dots */
+.slide-dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: rgba(0, 102, 204, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dot.active {
+  background: var(--primary);
+  transform: scale(1.2);
 }
 
 .badge-pill {
@@ -453,13 +576,33 @@ a {
   }
 
   .bento-main {
-    grid-template-columns: 1fr;
+    min-height: 500px;
+    /* Ensure height for absolute slides */
+    padding: 0;
+  }
+
+  .slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
     padding: 2rem;
   }
 
   .bento-image-main {
-    display: none;
+    display: block;
+    /* Show image in slideshow */
+    margin-top: 2rem;
+    height: 150px;
+    /* Constrain height */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .bento-image-main svg {
+    max-height: 100%;
+    width: auto;
   }
 
   /* Hide decoration on mobile for cleaner look */
@@ -477,6 +620,67 @@ a {
     padding: 2rem;
     gap: 1rem;
   }
+}
+
+/* ========================================
+   BRAND SLIDER
+   ======================================== */
+.brand-slider {
+  overflow: hidden;
+  background: white;
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.slider-track {
+  display: flex;
+  width: calc(200px * 14);
+  /* 200px per item * 14 items */
+  animation: scroll 30s linear infinite;
+}
+
+.brand-slide {
+  width: 200px;
+  height: 100px;
+  /* Increased height for images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  padding: 0 1rem;
+  /* Add padding to prevent touching */
+}
+
+/* Ensure images fit nicely */
+.brand-slide img {
+  max-width: 100%;
+  max-height: 80px;
+  object-fit: contain;
+  /* Optional: Make them grayscale to match theme */
+  transition: var(--transition);
+}
+
+.brand-slide:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.brand-slide:hover img {
+  filter: grayscale(0%);
+  /* Color on hover */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-200px * 7));
+  }
+
+  /* Move by half the width (one set) */
 }
 
 /* ========================================
@@ -698,18 +902,63 @@ a {
   max-width: 500px;
 }
 
+.about-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .about-list li {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 102, 204, 0.15);
+  border-radius: var(--radius-md);
   color: var(--text-body);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.05);
+  /* Soft base glow */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.about-list li:last-child {
-  border-bottom: none;
+.about-list li:hover {
+  transform: translateX(10px);
+  background: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 8px 25px rgba(0, 102, 204, 0.25);
+  /* Stronger glow on hover */
 }
+
+/* Glowing Checkmark */
+.about-list li::before {
+  content: "✓";
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 1.2rem;
+  text-shadow: 0 0 10px rgba(0, 102, 204, 0.6);
+  /* Text glow */
+}
+
+/* Remove old checkmark text content handling if it was in HTML, 
+   but HTML has "✓" text. We should probably hide the text "✓" and use the pseudo-element 
+   OR just style the first character if possible. 
+   Actually, the HTML structure is: <li>✓ <strong>... 
+   So I can wraps the checkmark in a span in HTML or just target the list item text.
+   
+   Better Layout Strategy:
+   The HTML is: <li>✓ <strong>Heading:</strong> Text</li>
+   I will stick to the current HTML and just style the list item generally.
+*/
+
+/* Correction: Since HTML has text content "✓", I won't use ::before content="✓". 
+   I will just add a glow to the whole item and maybe specific text styling if I can target it.
+   But I can't target "✓" easily without a span. 
+   
+   Let's just make the whole card look great.
+*/
 
 .about-image {
   border-radius: var(--radius-md);
@@ -717,9 +966,31 @@ a {
   box-shadow: var(--shadow-lg);
 }
 
-.about-image svg {
+/* Logo Showcase in About Section */
+.logo-showcase {
   background: #fff;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  height: 100%;
+}
+
+.logo-showcase img {
+  max-width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: contain;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Bouncy transition */
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
+}
+
+.logo-showcase:hover img {
+  transform: scale(1.15) rotate(2deg);
+  /* Pop up and slight tilt */
+  filter: drop-shadow(0 10px 20px rgba(0, 102, 204, 0.4));
+  /* Blue glow */
 }
 
 /* ========================================
@@ -798,6 +1069,27 @@ a {
   margin-bottom: 0.5rem;
   font-weight: 500;
   font-size: 0.9rem;
+}
+
+/* Social Feed */
+.social-feed-wrapper {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.facebook-feed-container {
+  display: inline-block;
+  background: #fff;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.facebook-feed-container iframe {
+  max-width: 100%;
 }
 
 .form-group input,
@@ -920,6 +1212,48 @@ a {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+
+  .map-container {
+    height: 300px;
+  }
+
+  /* About Section Responsive */
+  /* About Section Responsive */
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    /* Stack vertically: Text top, Image bottom */
+    text-align: center;
+    gap: 3rem;
+    width: 100%;
+  }
+
+  .about-image {
+    width: 100%;
+    max-width: 500px;
+    /* Prevent it from getting too huge on tablets */
+    margin: 0 auto;
+  }
+
+  .about-text {
+    width: 100%;
+  }
+
+  .about {
+    padding: 3rem 0;
+    /* Reduce padding on mobile */
+  }
+
+  .about-text p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-list li {
+    justify-content: center;
+    text-align: left;
+    /* Keep list items readable */
+  }
 }
 
 @media (max-width: 768px) {
@@ -930,9 +1264,21 @@ a {
   }
 
   .bento-main {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 2rem;
+    /* Ensure slideshow stacking works */
+    padding: 0 !important;
+    /* Force override */
+    min-height: auto;
+    /* Let content dictate height via grid stacking */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    /* Consistent padding */
   }
 
   .bento-main h1 {
@@ -940,7 +1286,18 @@ a {
   }
 
   .bento-image-main {
-    display: none;
+    display: flex !important;
+    /* Force show */
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .bento-image-main svg {
+    max-height: 100%;
+    width: auto;
   }
 
   .bento-actions {

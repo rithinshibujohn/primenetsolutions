@@ -79,14 +79,14 @@
   <header class="navbar">
     <div class="container nav-container">
       <div class="logo-section">
-        <img src="assets/logo.png.png" alt="Primenet Solutions FZC Logo" class="logo">
-        <span class="brand-name"> <img src="assets/textlogo.png" alt="Primenet Solutions FZC" class="textlogo"><span>
+        <img src="assets/logo.png" alt="Primenet Solutions FZC Logo" class="logo">
+        <span class="brand-name"> <span>
       </div>
       <nav class="nav-menu">
         <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
         <a href="#services" class="nav-link">Services</a>
         <a href="#products" class="nav-link">Products</a>
-        <a href="#about" class="nav-link">About</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
       <button class="menu-toggle" id="menuToggle">☰</button>
@@ -97,34 +97,94 @@
   <section id="home" class="hero-bento">
     <div class="container">
       <div class="bento-grid">
-        <!-- Main Hero Card -->
-        <div class="bento-card bento-main">
-          <div class="bento-content">
-            <span class="badge-pill">🚀 Premier Wholesale IT Partner</span>
-            <h1>Comprehensive <br><span class="text-highlight">IT Infrastructure</span></h1>
-            <p>Primenet Solutions FZC specializes in wholesale hardware, specialized equipment, and enterprise security
-              management for the modern era.</p>
-            <div class="bento-actions">
-              <a href="#products" class="btn btn-primary">View Products</a>
-              <a href="#contact" class="btn btn-secondary">Get a Quote</a>
+        <!-- Main Hero Card (Slideshow) -->
+        <div class="bento-card bento-main" id="heroSlideshow">
+          <!-- Slides Container -->
+          <div class="slides-container">
+
+            <!-- Slide 1: General/Infrastructure (Original) -->
+            <div class="slide active">
+              <div class="bento-content">
+                <span class="badge-pill">🚀 Premier Wholesale IT Partner</span>
+                <h1>Wholesale <br><span class="text-highlight">IT Hardware</span></h1>
+                <p>Servers, Workstations, and Networking Gear for Enterprise.</p>
+                <div class="bento-actions">
+                  <a href="#products" class="btn btn-primary">View Catalog</a>
+                </div>
+              </div>
+              <div class="bento-image-main">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#0066cc;stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#004499;stop-opacity:1" />
+                    </linearGradient>
+                  </defs>
+                  <rect x="40" y="40" width="120" height="120" rx="20" fill="url(#grad1)" opacity="0.1" />
+                  <circle cx="100" cy="100" r="40" stroke="url(#grad1)" stroke-width="2" fill="none" />
+                  <path d="M 100 60 L 100 80 M 100 120 L 100 140 M 60 100 L 80 100 M 120 100 L 140 100" stroke="#0066cc"
+                    stroke-width="2" />
+                </svg>
+              </div>
             </div>
+
+            <!-- Slide 2: Security Systems -->
+            <div class="slide">
+              <div class="bento-content">
+                <span class="badge-pill">🚀 Premier Wholesale IT Partner</span>
+                <h1>Advanced <br><span class="text-highlight">Security Systems</span></h1>
+                <p>CCTV, Biometrics, and Encryption Hardware.</p>
+                <div class="bento-actions">
+                  <a href="#services" class="btn btn-primary">Explore Solutions</a>
+                </div>
+              </div>
+              <div class="bento-image-main">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M100 30 L170 60 V110 C170 150 140 185 100 195 C60 185 30 150 30 110 V60 L100 30 Z"
+                    fill="rgba(0, 102, 204, 0.05)" stroke="#0066cc" stroke-width="2" />
+                  <path d="M100 80 V110 M100 110 L120 130" stroke="#ff9900" stroke-width="3" stroke-linecap="round" />
+                  <circle cx="100" cy="110" r="25" stroke="#ff9900" stroke-width="2" fill="none" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Slide 3: Specialized Equipment -->
+            <div class="slide">
+              <div class="bento-content">
+                <span class="badge-pill">🚀 Premier Wholesale IT Partner</span>
+                <h1>Specialized <br><span class="text-highlight">Machinery</span></h1>
+                <p>Engineering Plotters and Printing Press Equipment.</p>
+                <div class="bento-actions">
+                  <a href="#contact" class="btn btn-primary">Contact Us</a>
+                </div>
+              </div>
+              <div class="bento-image-main">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="50" y="60" width="100" height="80" fill="none" stroke="#0066cc" stroke-width="2" rx="5" />
+                  <line x1="60" y1="80" x2="140" y2="80" stroke="#0066cc" stroke-width="1" opacity="0.5" />
+                  <line x1="60" y1="100" x2="140" y2="100" stroke="#0066cc" stroke-width="1" opacity="0.5" />
+                  <circle cx="160" cy="160" r="20" fill="#ff9900" opacity="0.1" />
+                  <circle cx="160" cy="160" r="10" stroke="#ff9900" stroke-width="2" fill="none" />
+                </svg>
+              </div>
+            </div>
+
           </div>
-          <div class="bento-image-main">
-            <!-- Abstract Tech Illustration -->
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#0066cc;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#004499;stop-opacity:1" />
-                </linearGradient>
-              </defs>
-              <rect x="40" y="40" width="120" height="120" rx="20" fill="url(#grad1)" opacity="0.1" />
-              <circle cx="100" cy="100" r="40" stroke="url(#grad1)" stroke-width="2" fill="none" />
-              <path d="M 100 60 L 100 80 M 100 120 L 100 140 M 60 100 L 80 100 M 120 100 L 140 100" stroke="#0066cc"
-                stroke-width="2" />
-            </svg>
+
+          <!-- Controls -->
+          <button class="slide-prev" aria-label="Previous Slide">❮</button>
+          <button class="slide-next" aria-label="Next Slide">❯</button>
+
+          <div class="slide-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
           </div>
+
         </div>
+
+
+
 
         <!-- Service Highlight 1 -->
         <div class="bento-card bento-feature-1">
@@ -155,6 +215,54 @@
     </div>
   </section>
 
+
+  <!-- About Section (Restored & Improved) -->
+  <section id="about" class="about">
+    <div class="container about-content">
+      <div class="about-text">
+        <h2>Your Trusted IT Partner</h2>
+        <p>Primenet Solutions FZC is a leading wholesale supplier of IT hardware and security systems, based in the
+          <strong>Sharjah Publishing City Free Zone</strong>.
+        </p>
+        <p>We provide high-quality computers, networking gear, and specialized equipment to help your business grow
+          securely.</p>
+        <ul class="about-list">
+          <li><strong>IT Hardware:</strong> Servers, PCs & Networking.</li>
+          <li><strong>Specialized Gear:</strong> Plotters & Press Machines.</li>
+          <li><strong>Security:</strong> Encryption & Biometric Systems.</li>
+          <li><strong>Global Standards:</strong> Certified Quality.</li>
+        </ul>
+      </div>
+      <div class="about-image">
+        <!-- Brand Logo Showcase -->
+        <div class="logo-showcase">
+          <img src="assets/logo.png" alt="Primenet Solutions FZC Logo">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Slider Section -->
+  <section class="brand-slider">
+    <div class="slider-track">
+      <!-- 14 Duplicates for seamless loop -->
+      <div class="brand-slide"><img src="assets/brands/dell.png"></div>
+      <div class="brand-slide"><img src="assets/brands/hp.png"></div>
+      <div class="brand-slide"><img src="assets/brands/lenovo.png"></div>
+      <div class="brand-slide"><img src="assets/brands/cisco.png"></div>
+      <div class="brand-slide"><img src="assets/brands/hikvision.png"></div>
+      <div class="brand-slide"><img src="assets/brands/canon.png"></div>
+      <div class="brand-slide"><img src="assets/brands/epson.png"></div>
+      <!-- Duplicate Set -->
+      <div class="brand-slide"><img src="assets/brands/dell.png"></div>
+      <div class="brand-slide"><img src="assets/brands/hp.png"></div>
+      <div class="brand-slide"><img src="assets/brands/lenovo.png"></div>
+      <div class="brand-slide"><img src="assets/brands/cisco.png"></div>
+      <div class="brand-slide"><img src="assets/brands/hikvision.png"></div>
+      <div class="brand-slide"><img src="assets/brands/canon.png"></div>
+      <div class="brand-slide"><img src="assets/brands/epson.png"></div>
+    </div>
+  </section>
 
   <!-- Services Section -->
   <section id="services" class="services">
@@ -320,41 +428,6 @@
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="about">
-    <div class="container about-content">
-      <div class="about-text">
-        <h2>About Primenet FZC</h2>
-        <p>Primenet Solutions FZC is a leading wholesale provider of IT hardware, networking infrastructure, and
-          specialized technical equipment. Based in Sharjah Publishing City Free Zone, we serve enterprise clients with
-          certified, high-quality technology solutions ranging from advanced security systems to engineering plotting
-          equipment.</p>
-        <ul class="about-list">
-          <li>✓ Wholesale IT & Computer Systems</li>
-          <li>✓ Authorized Specialized Equipment Trading</li>
-          <li>✓ IT Security & Infrastructure Management</li>
-          <li>✓ Global Free Zone Company Standards</li>
-        </ul>
-      </div>
-      <div class="about-image">
-        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="150" cy="150" r="140" fill="rgba(0, 188, 212, 0.05)" stroke="currentColor" stroke-width="2" />
-          <circle cx="150" cy="150" r="100" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5" />
-          <g fill="currentColor" opacity="0.8">
-            <circle cx="150" cy="80" r="8" />
-            <circle cx="200" cy="120" r="6" />
-            <circle cx="220" cy="170" r="7" />
-            <circle cx="200" cy="220" r="6" />
-            <circle cx="150" cy="240" r="8" />
-            <circle cx="100" cy="220" r="6" />
-            <circle cx="80" cy="170" r="7" />
-            <circle cx="100" cy="120" r="6" />
-          </g>
-        </svg>
-      </div>
-    </div>
-  </section>
-
   <!-- Contact Section -->
   <section id="contact" class="contact">
     <div class="container">
@@ -386,7 +459,7 @@
               <span class="info-icon">✉️</span>
               <div>
                 <h4>Email</h4>
-                <p>info@primenet.solutions</p>
+                <p>info@primenetsolutions.ae</p>
               </div>
             </div>
             <div class="info-item">
@@ -424,6 +497,18 @@
           </div>
           <button type="submit" class="btn btn-primary">Send Message</button>
         </form>
+        <!-- <div class="social-feed-wrapper">
+          <div class="section-header">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Follow Us on Facebook</h3>
+          </div>
+          <div class="facebook-feed-container">
+            <iframe
+              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Froyalphotostatthiruvalla&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+              width="340" height="200" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+              allowfullscreen="true"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+          </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -433,6 +518,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
+          <img src="assets/logo.png" alt="Primenet Solutions FZC Logo" class="logo">
           <h4>Primenet Solutions FZC</h4>
           <p>Your trusted partner for specialized IT wholesale and infrastructure solutions.</p>
         </div>

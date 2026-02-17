@@ -159,3 +159,86 @@ document.addEventListener('keydown', function (e) {
 window.addEventListener('load', function () {
   document.body.style.opacity = '1';
 });
+
+// ==========================================
+// Hero Slideshow Logic
+// ==========================================
+document.addEventListener('DOMContentLoaded', function () {
+  const slideshow = document.getElementById('heroSlideshow');
+  if (!slideshow) return;
+
+  const slides = slideshow.querySelectorAll('.slide');
+  const dots = slideshow.querySelectorAll('.dot');
+  const prevBtn = slideshow.querySelector('.slide-prev');
+  const nextBtn = slideshow.querySelector('.slide-next');
+
+  if (slides.length === 0) return;
+
+  let slideIndex = 0;
+  let slideInterval;
+  const intervalTime = 5000; // 5 seconds per slide
+
+  // Function to show a specific slide
+  function showSlide(n) {
+    // Wrap around index
+    if (n >= slides.length) slideIndex = 0;
+    else if (n < 0) slideIndex = slides.length - 1;
+    else slideIndex = n;
+
+    // Update classes
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    slides[slideIndex].classList.add('active');
+    if (dots[slideIndex]) dots[slideIndex].classList.add('active');
+  }
+
+  // Next/Prev controls
+  function nextSlide() {
+    showSlide(slideIndex + 1);
+  }
+
+  function prevSlide() {
+    showSlide(slideIndex - 1);
+  }
+
+  // Event Listeners
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    nextSlide();
+    resetInterval();
+  });
+
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    prevSlide();
+    resetInterval();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+      resetInterval();
+    });
+  });
+
+  // Autoplay Logic
+  function startInterval() {
+    slideInterval = setInterval(nextSlide, intervalTime);
+  }
+
+  function resetInterval() {
+    clearInterval(slideInterval);
+    startInterval();
+  }
+
+  // Pause on hover
+  slideshow.addEventListener('mouseenter', () => {
+    clearInterval(slideInterval);
+  });
+
+  slideshow.addEventListener('mouseleave', () => {
+    startInterval();
+  });
+
+  // Start autoplay
+  startInterval();
+});
