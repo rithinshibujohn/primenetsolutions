@@ -167,78 +167,79 @@ document.addEventListener('DOMContentLoaded', function () {
   const slideshow = document.getElementById('heroSlideshow');
   if (!slideshow) return;
 
-  const slides = slideshow.querySelectorAll('.slide');
-  const dots = slideshow.querySelectorAll('.dot');
-  const prevBtn = slideshow.querySelector('.slide-prev');
-  const nextBtn = slideshow.querySelector('.slide-next');
+  const slides = slideshow.querySelectorAll('.hs-slide');
+  const dots = document.querySelectorAll('.hs-dot');
+  const prevBtn = document.querySelector('.hs-prev');
+  const nextBtn = document.querySelector('.hs-next');
+  const fill = document.getElementById('hsProgressFill');
 
-  if (slides.length === 0) return;
+  if (!slides.length) return;
 
+  const INTERVAL = 5000;
   let slideIndex = 0;
-  let slideInterval;
-  const intervalTime = 5000; // 5 seconds per slide
+  let slideTimer, progressTimer, progressStart;
 
-  // Function to show a specific slide
   function showSlide(n) {
-    // Wrap around index
-    if (n >= slides.length) slideIndex = 0;
-    else if (n < 0) slideIndex = slides.length - 1;
-    else slideIndex = n;
+    if (n >= slides.length) n = 0;
+    if (n < 0) n = slides.length - 1;
+    slideIndex = n;
 
-    // Update classes
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
     slides[slideIndex].classList.add('active');
     if (dots[slideIndex]) dots[slideIndex].classList.add('active');
+
+    resetProgress();
   }
 
-  // Next/Prev controls
-  function nextSlide() {
-    showSlide(slideIndex + 1);
+  /* --- Progress bar --- */
+  function resetProgress() {
+    if (fill) {
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      // Force reflow
+      fill.offsetWidth;
+      fill.style.transition = `width ${INTERVAL}ms linear`;
+      fill.style.width = '100%';
+    }
   }
 
-  function prevSlide() {
-    showSlide(slideIndex - 1);
+  /* --- Auto-play --- */
+  function startTimer() {
+    clearInterval(slideTimer);
+    slideTimer = setInterval(() => showSlide(slideIndex + 1), INTERVAL);
+    resetProgress();
   }
 
-  // Event Listeners
-  if (nextBtn) nextBtn.addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
-  });
-
-  if (prevBtn) prevBtn.addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-  });
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      showSlide(index);
-      resetInterval();
-    });
-  });
-
-  // Autoplay Logic
-  function startInterval() {
-    slideInterval = setInterval(nextSlide, intervalTime);
+  function stopTimer() {
+    clearInterval(slideTimer);
+    if (fill) { fill.style.transition = 'none'; }
   }
 
-  function resetInterval() {
-    clearInterval(slideInterval);
-    startInterval();
-  }
+  // Controls
+  if (nextBtn) nextBtn.addEventListener('click', () => { showSlide(slideIndex + 1); startTimer(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { showSlide(slideIndex - 1); startTimer(); });
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { showSlide(i); startTimer(); }));
 
   // Pause on hover
-  slideshow.addEventListener('mouseenter', () => {
-    clearInterval(slideInterval);
+  slideshow.addEventListener('mouseenter', stopTimer);
+  slideshow.addEventListener('mouseleave', startTimer);
+
+  // Touch swipe
+  let touchStartX = 0;
+  slideshow.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  slideshow.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 40) { showSlide(slideIndex + (diff > 0 ? 1 : -1)); startTimer(); }
+  }, { passive: true });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { showSlide(slideIndex + 1); startTimer(); }
+    if (e.key === 'ArrowLeft') { showSlide(slideIndex - 1); startTimer(); }
   });
 
-  slideshow.addEventListener('mouseleave', () => {
-    startInterval();
-  });
-
-  // Start autoplay
-  startInterval();
+  // Kick off
+  startTimer();
 });
