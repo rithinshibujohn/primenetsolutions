@@ -178,14 +178,16 @@ a {
 
 .nav-menu {
   display: flex;
-  gap: 2rem;
+  gap: 1.25rem;
   list-style: none;
+  align-items: center;
 }
 
 .nav-link {
   font-weight: 500;
   color: var(--text-body);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
