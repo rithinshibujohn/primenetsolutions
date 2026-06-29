@@ -1,0 +1,17 @@
+﻿# robots.txt for Primenet Solutions FZC
+# https://primenetsolutions.ae
+
+User-agent: *
+Allow: /
+
+# Block private/admin paths (add as needed)
+Disallow: /admin/
+Disallow: /cgi-bin/
+Disallow: /.git/
+Disallow: /.vscode/
+
+# Sitemap location
+Sitemap: https://primenetsolutions.ae/sitemap.xml
+
+# Crawl delay (optional, be gentle on the server)
+Crawl-delay: 10
