@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     {
       keywords: ['contact', 'email', 'phone', 'call', 'reach', 'get in touch', 'talk', 'message', 'whatsapp'],
-      answer: "You can reach us through:\n\n📧 **Email:** info@primenetsolutions.ae\n📞 **Phone:** + 971 50 545 3460 \n + 971 52 699 8801\n⏰ **Hours:** Mon – Sat: 9:00 AM – 6:00 PM\n\nOr fill in the contact form on this page and we'll get back to you promptly!"
+      answer: "You can reach us through:\n\n📧 **Email:** info@primenetsolutions.ae\n📞 **Phone:** +971 52 608 1576 \n  + 971 52 699 8801\n⏰ **Hours:** Mon – Sat: 9:00 AM – 6:00 PM\n\nOr fill in the contact form on this page and we'll get back to you promptly!"
     },
     {
       keywords: ['hour', 'timing', 'open', 'close', 'working', 'time', 'available', 'when'],
