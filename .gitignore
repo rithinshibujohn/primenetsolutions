@@ -1,0 +1,24 @@
+# Build artifacts / backups (not part of the deployed site)
+Backup/
+twbuild/
+*.zip
+
+# Leftover standalone assets (site is a single inline index.html)
+css/
+js/
+
+# Downloaded reference templates
+Template/
+
+# Scratch / empty files
+3000
+_mobilecheck.html
+
+# OG cover source artifacts (og-cover.jpg is the deployed asset)
+asset/og-cover-template.html
+asset/og-cover.png
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log

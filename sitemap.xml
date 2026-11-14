@@ -1,55 +1,21 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Only real, crawlable pages belong in a sitemap.
+  This is a single-page site, so there is exactly one entry.
+  Section anchors (#about, #services, ...) are NOT separate pages
+  and must not be listed — search engines ignore them.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Homepage -->
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://primenetsolutions.ae/</loc>
-    <lastmod>2026-06-29</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.primenetsolutions.ae/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.primenetsolutions.ae/asset/og-cover.jpg</image:loc>
+      <image:title>PrimeNet Solutions FZC — Sharjah-based enterprise IT integrator</image:title>
+      <image:caption>Enterprise networking, SIRA-compliant security, biometrics, servers and IT maintenance contracts across the UAE.</image:caption>
+    </image:image>
   </url>
-
-  <!-- About Section -->
-  <url>
-    <loc>https://primenetsolutions.ae/#about</loc>
-    <lastmod>2026-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Services Section -->
-  <url>
-    <loc>https://primenetsolutions.ae/#services</loc>
-    <lastmod>2026-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Products Section -->
-  <url>
-    <loc>https://primenetsolutions.ae/#products</loc>
-    <lastmod>2026-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Contact Section -->
-  <url>
-    <loc>https://primenetsolutions.ae/#contact</loc>
-    <lastmod>2026-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Brochure PDF -->
-  <url>
-    <loc>https://primenetsolutions.ae/assets/brochure.pdf</loc>
-    <lastmod>2026-06-29</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
 </urlset>
