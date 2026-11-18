@@ -546,15 +546,17 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 42%;
+      left: 0;
+      width: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, #06b6d4, #38bdf8, #8b5cf6);
       box-shadow: 0 0 14px rgba(6, 182, 212, 0.55);
-      animation: plSweep 1.15s ease-in-out infinite;
+      transform-origin: left center;
+      animation: plFill 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
-    @keyframes plSweep {
-      0% { transform: translateX(-110%); }
-      100% { transform: translateX(280%); }
+    @keyframes plFill {
+      0% { transform: scaleX(0.02); }
+      100% { transform: scaleX(1); }
     }
     @media (prefers-reduced-motion: reduce) {
       .pl-logo, .pl-bar { animation: none; }
@@ -795,6 +797,36 @@
     ]
   }
   </script>
+  <link rel="alternate" hreflang="en" href="https://primenetsolutions.ae/" />
+  <link rel="alternate" hreflang="ar" href="https://primenetsolutions.ae/?lang=ar" />
+  <link rel="alternate" hreflang="x-default" href="https://primenetsolutions.ae/" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    [dir="rtl"] { text-align: right; }
+    [dir="rtl"] body { font-family: 'Tajawal', 'Inter', sans-serif; }
+    [dir="rtl"] .font-display { font-family: 'Tajawal', 'Poppins', sans-serif; }
+    [dir="rtl"] .text-left, [dir="rtl"] .sm\:text-left,
+    [dir="rtl"] .md\:text-left, [dir="rtl"] .lg\:text-left { text-align: right !important; }
+    [dir="rtl"] .text-right, [dir="rtl"] .sm\:text-right,
+    [dir="rtl"] .md\:text-right, [dir="rtl"] .lg\:text-right { text-align: left !important; }
+    [dir="rtl"] .mr-auto { margin-left: auto !important; margin-right: 0 !important; }
+    [dir="rtl"] .ml-auto { margin-right: auto !important; margin-left: 0 !important; }
+    [dir="rtl"] .ml-1 { margin-left: 0 !important; margin-right: 0.25rem !important; }
+    [dir="rtl"] .mr-1 { margin-right: 0 !important; margin-left: 0.25rem !important; }
+    [dir="rtl"] .pl-3\.5 { padding-left: 0 !important; padding-right: 0.875rem !important; }
+    [dir="rtl"] .sm\:pl-4 { padding-left: 0 !important; padding-right: 1rem !important; }
+    [dir="rtl"] .pl-8 { padding-left: 0 !important; padding-right: 2rem !important; }
+    [dir="rtl"] #chatWidget { right: auto !important; left: 1rem; align-items: flex-start; }
+    [dir="rtl"] #soundToggleMobile { left: auto !important; right: 1rem; }
+    [dir="rtl"] #toast { left: auto !important; right: 1rem; }
+    [dir="rtl"] #chatWindow, [dir="rtl"] #fabMenu { transform-origin: bottom left !important; }
+    [dir="rtl"] [aria-label="Previous Slide"] i,
+    [dir="rtl"] [aria-label="Next Slide"] i { transform: rotate(180deg); }
+    [dir="rtl"] .scroll-progress-fill { left: auto; right: 0; }
+    [dir="rtl"] .brand-marquee-track { animation-direction: reverse; }
+    .lang-btn { padding: .25rem .5rem; border-radius: 9999px; font-size: 11px; font-weight: 700; transition: all .2s; color: rgba(148,163,184,1); }
+    .lang-btn.is-active { background: linear-gradient(90deg,#06b6d4,#8b5cf6); color: #fff; }
+  </style>
 </head>
 
 <body class="bg-slateDeep text-textMain font-sans antialiased selection:bg-accentCyan/30 selection:text-white overflow-x-hidden">
@@ -818,7 +850,7 @@
       var el = document.getElementById('preloader');
       if (!el) return;
       var start = performance.now();
-      var MIN_VISIBLE = 380;   // avoids a jarring flash on fast loads
+      var MIN_VISIBLE = 2000;  // show the loading screen for 2 seconds
       var MAX_VISIBLE = 4000;  // never trap the visitor if an asset stalls
       var done = false;
 
@@ -897,6 +929,10 @@
               </a>
             </li>
           </ul>
+          <div class="lang-switch hidden lg:flex items-center gap-0.5 ml-1 rounded-full border border-white/10 bg-white/5 p-0.5" role="group" aria-label="Language">
+            <button type="button" data-lang="en" onclick="setLang('en')" class="lang-btn" aria-pressed="true" data-no-i18n>EN</button>
+            <button type="button" data-lang="ar" onclick="setLang('ar')" class="lang-btn" aria-pressed="false" data-no-i18n>عربى</button>
+          </div>
           <button type="button" id="soundToggle" data-sound-toggle onclick="toggleScrollSound()" class="ml-1 inline-flex items-center justify-center w-8 h-8 lg:w-9 lg:h-9 rounded-full border border-white/10 bg-white/5 text-textSub hover:text-white hover:border-accentCyan/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-accentCyan/60 transition-colors cursor-pointer shrink-0" aria-pressed="false" aria-label="Enable scroll sound" title="Enable scroll sound">
             <i data-sound-icon class="fa-solid fa-volume-high text-[11px] text-accentCyan"></i>
           </button>
@@ -919,6 +955,10 @@
         <li><a href="brochure/PNS Brochure.pdf" download target="_blank" onclick="showToast('Downloading PrimeNet Solutions Brochure PDF...'); toggleMobileMenu();" class="mobile-nav-link block py-2 hover:text-white flex items-center justify-between bg-amber-500/10 border border-amber-500/20 px-3 rounded-xl mt-1 text-amber-300"><span class="flex items-center gap-3"><i class="fa-solid fa-file-pdf text-sm text-amber-400 w-5"></i> <span class="font-semibold">Download Brochure</span></span> <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/30">PDF</span></a></li>
         </ul>
         <div class="sticky bottom-0 px-5 py-3 bg-slateMid/95 backdrop-blur-2xl border-t border-white/5">
+          <div class="lang-switch flex lg:hidden items-center justify-center gap-2 mb-2" role="group" aria-label="Language">
+            <button type="button" data-lang="en" onclick="setLang('en')" class="lang-btn border border-white/10" aria-pressed="true" data-no-i18n>English</button>
+            <button type="button" data-lang="ar" onclick="setLang('ar')" class="lang-btn border border-white/10" aria-pressed="false" data-no-i18n>العربية</button>
+          </div>
           <button type="button" data-sound-toggle onclick="toggleScrollSound()" class="w-full flex items-center justify-between rounded-full border border-white/10 bg-white/5 px-4 py-2.5 mb-2 text-xs font-semibold text-textSub hover:text-white transition-colors cursor-pointer" aria-pressed="false" aria-label="Enable scroll sound">
             <span class="flex items-center gap-2.5">
               <span class="relative flex h-2 w-2">
@@ -4239,5 +4279,519 @@
       window.addEventListener('resize', function () { if (!isMobile()) show(); }, { passive: true });
     })();
   </script>
+<script>
+(function () {
+  'use strict';
+  var TEXT = {
+  "Inquire": "استفسار",
+  "Brochure": "الكتيّب",
+  "Services": "الخدمات",
+  "About": "عنّا",
+  "Apply Now": "تقدّم الآن",
+  "Careers": "الوظائف",
+  "Contact": "اتصل بنا",
+  "Home": "الرئيسية",
+  "Products": "المنتجات",
+  "Solution Specs": "مواصفات الحل",
+  "Get in touch": "تواصل معنا",
+  "Get in Touch": "تواصل معنا",
+  "Security Systems": "أنظمة الأمن",
+  "Showcase": "معرض المشاريع",
+  "Action completed successfully!": "تمت العملية بنجاح!",
+  "A Trusted Partner": "شريك موثوق",
+  "AMC": "الصيانة السنوية",
+  "Active 10G Backbone": "عمود فقري نشط بسرعة 10G",
+  "Advanced": "متقدّمة",
+  "Advanced Security & Biometrics": "الأمن المتقدم والقياسات الحيوية",
+  "All-Flash NVMe": "تخزين NVMe بالكامل فلاش",
+  "Attach File (PDF / JPEG / PNG)": "إرفاق ملف (PDF / JPEG / PNG)",
+  "B2B IT Sales": "مبيعات تقنية المعلومات للشركات",
+  "Be part of the forward-thinking engineering and integration force powering high-impact IT and security infrastructures across the United Arab Emirates.": "كن جزءًا من فريق الهندسة والتكامل الرائد الذي يشغّل مشاريع تقنية المعلومات والأمن عالية الأثر في دولة الإمارات.",
+  "Biometric Access Intelligence": "الذكاء الحيوي للدخول",
+  "Billing & VAT Compliance": "الفوترة والامتثال لضريبة القيمة المضافة",
+  "Biometrics / ZKTeco": "القياسات الحيوية / ZKTeco",
+  "Brands We Deal With": "العلامات التي نتعامل معها",
+  "Browse Products": "تصفح المنتجات",
+  "Build Your": "ابنِ مسيرتك",
+  "Business Centre, SPC FZC, Sharjah, UAE": "مركز الأعمال، SPC FZC، الشارقة، الإمارات",
+  "8F95+XC - Sharjah, UAE (Business Centre, SPC FZC)": "8F95+XC - الشارقة، الإمارات (مركز الأعمال، SPC FZC)",
+  "Career": "مسيرة مهنية",
+  "Categories": "الفئات",
+  "Certified Engineers": "مهندسون معتمدون",
+  "Certified memory, enterprise disks, and power supplies with rapid dispatch SLAs.": "ذاكرة معتمدة وأقراص تخزين مؤسسية ومصادر طاقة مع شحن سريع وفق اتفاقيات مستوى الخدمة.",
+  "Click to attach file (PDF / JPEG / PNG)": "انقر لإرفاق ملف (PDF / JPEG / PNG)",
+  "Client Portfolio": "محفظة العملاء",
+  "Commercial Photocopiers • Heavy-Duty MFP Printers • High-Speed Document Scanners": "آلات تصوير تجارية • طابعات متعددة الوظائف ثقيلة • ماسحات مستندات عالية السرعة",
+  "Compliance & Integration": "الامتثال والتكامل",
+  "Computers & Servers": "أجهزة الكمبيوتر والخوادم",
+  "Connect With Us": "تواصل معنا",
+  "Connecting Vision To Reality": "ربط الرؤية بالواقع",
+  "CONNECTING VISION TO REALITY": "نربط الرؤية بالواقع",
+  "Core Infrastructure Solutions": "حلول البنية التحتية الأساسية",
+  "Data Center": "مركز البيانات",
+  "Data Sovereignty": "سيادة البيانات",
+  "Data Sovereignty & Backups": "سيادة البيانات والنسخ الاحتياطي",
+  "Data migration and staff training.": "ترحيل البيانات وتدريب الموظفين.",
+  "Deploy and configure enterprise Cisco/Fortinet switches, routers, VLAN topologies, and server room infrastructure across client sites in the UAE.": "ننشر ونهيّئ محولات Cisco/Fortinet وأجهزة التوجيه وطوبولوجيات VLAN والبنية التحتية لغرف الخوادم في مواقع العملاء بالإمارات.",
+  "Design & Development": "التصميم والتطوير",
+  "Designed & Developed by": "التصميم والتطوير بواسطة",
+  "Direct Procurement": "التوريد المباشر",
+  "Documentation": "الوثائق",
+  "Domain/hosting setup, security patches, updates, and ongoing content support.": "إعداد النطاق والاستضافة، وتحديثات الأمان، ودعم المحتوى المستمر.",
+  "Download Brochure": "تنزيل الكتيّب",
+  "Download Official Brochure": "تنزيل الكتيّب الرسمي",
+  "Drive B2B enterprise procurement, bulk hardware distribution, and client relationships across servers, laptops, and networking products in the Emirates.": "نقود مشتريات الشركات وتوزيع الأجهزة بالجملة وبناء علاقات العملاء في مجال الخوادم وأجهزة اللابتوب ومنتجات الشبكات في الإمارات.",
+  "Drop General CV": "أرسل سيرتك الذاتية",
+  "Drop your details or chat instantly via WhatsApp.": "أدخل بياناتك أو تحدث معنا عبر واتساب فورًا.",
+  "E-Commerce & Bookings": "التجارة الإلكترونية والحجوزات",
+  "ELV / CCTV & Security Technician": "فني أنظمة ELV / كاميرات المراقبة والأمن",
+  "Email": "البريد الإلكتروني",
+  "EmailJS not configured â€” submissions open your email app with a pre-filled draft. See code comments in index.html to enable direct sending.": "EmailJS غير مُعد — تُفتح مسودة بريد جاهزة في تطبيق البريد. راجع تعليقات الكود في index.html لتفعيل الإرسال المباشر.",
+  "Encryption Hardware • IP CCTV Surveillance • Biometric Access Controls": "أجهزة تشفير • مراقبة IP • أنظمة تحكم بالدخول الحيوي",
+  "End-to-end technology solutions tailored for UAE businesses, government mandates, and rigorous regulatory standards â€” from networking, security and server infrastructure to website creation, e-commerce, and invoicing software.": "حلول تقنية شاملة مصممة للشركات والجهات الحكومية في الإمارات وللمعايير التنظيمية الصارمة — من الشبكات والأمن والخوادم إلى إنشاء المواقع والتجارة الإلكترونية وبرامج الفوترة.",
+  "Engineered to meet strict UAE communications and data integrity requirements.": "مصممة لتلبية متطلبات الاتصالات وسلامة البيانات الصارمة في الإمارات.",
+  "Engineering Drawing • Industrial Plotters • Printing Press Machinery": "رسومات هندسية • طابعات قيادة صناعية • آلات طباعة",
+  "Enterprise AI Ready": "جاهزية للذكاء الاصطناعي المؤسسي",
+  "Enterprise Capabilities": "قدرات المؤسسات",
+  "Enterprise Compute & Arrays": "الحوسبة ومصفوفات التخزين المؤسسية",
+  "Enterprise Compute & Storage Arrays": "الحوسبة ومصفوفات التخزين المؤسسية",
+  "Enterprise Ecosystem": "النظام البيئي المؤسسي",
+  "Enterprise Network Architecture": "معمارية الشبكات المؤسسية",
+  "Equipment": "المعدات",
+  "Expert Implementation & AMC": "تنفيذ احترافي وصيانة سنوية",
+  "Explore Infrastructure": "استكشف البنية التحتية",
+  "Explore Solutions": "استكشف الحلول",
+  "Extensive range of enterprise IT and specialized equipment supplied across Sharjah, Dubai, and the UAE.": "مجموعة واسعة من معدات تقنية المعلومات والمعدات المتخصصة تُورد في الشارقة ودبي وجميع الإمارات.",
+  "FTA-compliant VAT invoicing, quotations, and credit notes with Arabic/English templates.": "فوترة ضريبة القيمة المضافة وفق هيئة الزكاة والضريبة والجمارك، وعروض أسعار وإشعارات دائنة بقوالب عربية/إنجليزية.",
+  "Facial AI": "الذكاء الاصطناعي للتعرف على الوجوه",
+  "Facial recognition, fingerprint terminals, and speed gates with encrypted audit logs.": "التعرف على الوجوه، أجهزة البصمة، والبوابات السريعة مع سجلات تدقيق مشفرة.",
+  "Fast Progression": "تقدم سريع",
+  "Fast, responsive corporate websites and portals built on clean, scalable code.": "مواقع وبوابات شركة سريعة ومتجاوبة مبنية على كود نظيف وقابل للتوسع.",
+  "Fibre-Optics • Managed Switches • Routers • Patch Cords": "ألياف بصرية • محولات مُدارة • أجهزة توجيه • كابلات تصحيح",
+  "Follow Us": "تابعنا",
+  "From network architecture and server integration to commercial hardware supply, PrimeNet Solutions delivers the technology backbone your business needs to operate with total confidence.": "من تصميم الشبكات وتكامل الخوادم إلى توريد الأجهزة التجارية، تقدم برايم نت سوليوشنز العمود الفقري التقني الذي تحتاجه أعمالك للعمل بثقة تامة.",
+  "Full turnkey integration with ongoing regulatory compliance re-certification support.": "تكامل شامل جاهز مع دعم مستمر لإعادة اعتماد الامتثال التنظيمي.",
+  "Full-Spectrum Security": "أمن شامل",
+  "Full-Time • B2B Enterprise Sales": "دوام كامل • مبيعات شركات B2B",
+  "Full-Time • Sharjah / Dubai": "دوام كامل • الشارقة / دبي",
+  "Full-Time • UAE On-site": "دوام كامل • في الموقع بالإمارات",
+  "Future Vision & Growth": "الرؤية المستقبلية والنمو",
+  "Get Quote": "احصل على عرض سعر",
+  "HARDWARE": "الأجهزة",
+  "Hardware Upgrades & Spares": "ترقية الأجهزة وقطع الغيار",
+  "High-performance networking fabrics, biometric access intelligence, and sovereign data systems deployed across UAE corporate and public sector environments.": "بنى شبكية عالية الأداء، وأنظمة دخول حيوية، وأنظمة بيانات سيادية تُنشر في بيئات الشركات والقطاع العام بالإمارات.",
+  "High-throughput campus backbones, redundant switching fabrics, and structured cabling engineered for zero downtime and UAE regulatory compliance.": "عمود فقري عالي السعة للحرم الجامعي، ومصفوفات تحويل زائدة عن الحاجة، وكابلات هيكلية مصممة لصفر توقف وللامتثال التنظيمي بالإمارات.",
+  "Hikvision / Dahua": "Hikvision / Dahua",
+  "Hosting & Care Plans": "الاستضافة وخطط الرعاية",
+  "IT Hardware Sales Executive": "أخصائي مبيعات أجهزة تقنية المعلومات",
+  "Implementation & Training": "التنفيذ والتدريب",
+  "Industrial": "صناعي",
+  "Industrial Grade Equipment": "معدات درجة صناعية",
+  "Industrial-Grade Precision & Heavy-Duty Production Technology. We supply high-performance, specialized hardware built to handle demanding technical workflows and commercial production environments.": "دقة صناعية وتقنية إنتاج ثقيلة. نورد أجهزة متخصصة عالية الأداء مصممة لسير عمل تقني وبيئات إنتاج تجارية متطلبة.",
+  "Infrastructure": "البنية التحتية",
+  "Installation, cabling, and calibration of SIRA-compliant IP CCTV, biometric access speed gates, and central surveillance control stations.": "التركيب والكابلات والمعايرة لكاميرات IP المتوافقة مع SIRA، وبوابات الدخول الحيوية، ومراكز المراقبة المركزية.",
+  "Instant WhatsApp Inquiry": "استفسار فوري عبر واتساب",
+  "Inventory & Automation": "المخزون والأتمتة",
+  "Invoicing & Accounting Software": "برامج الفوترة والمحاسبة",
+  "Join Our UAE Team": "انضم إلى فريقنا في الإمارات",
+  "LOADING": "جارٍ التحميل",
+  "Legal Notice": "إشعار قانوني",
+  "Let's build something": "لنبنِ شيئًا",
+  "Lifecycle Governance & AMC": "إدارة دورة الحياة والصيانة",
+  "Local UAE storage architectures, automated offsite snapshots, and disaster recovery.": "بنى تخزين محلية بالإمارات، ونسخ احتياطي تلقائي خارج الموقع، وتعافٍ من الكوارث.",
+  "Location": "الموقع",
+  "Message": "الرسالة",
+  "Multi-factor biometric validation, speed gate turnstiles, and tamper-proof encrypted audit logging compliant with strict UAE security mandates.": "تحقق حيوي متعدد العوامل، بوابات دوّارة، وتسجيل تدقيق مشفر مقاوم للعبث متوافق مع متطلبات الأمن الصارمة بالإمارات.",
+  "Name": "الاسم",
+  "Navigation": "التنقل",
+  "Negotiation": "التفاوض",
+  "Network & Systems Engineer": "مهندس شبكات وأنظمة",
+  "Network design, server/storage systems, structured cabling, and secure data center builds.": "تصميم الشبكات، وأنظمة الخوادم والتخزين، والكابلات الهيكلية، وبناء مراكز بيانات آمنة.",
+  "Networking": "الشبكات",
+  "Networking & IT Infrastructure": "الشبكات والبنية التحتية لتقنية المعلومات",
+  "Networking Gear": "معدات الشبكات",
+  "O.S & Server Licenses • Microsoft 365 • Enterprise Antivirus & Firewall": "تراخيص أنظمة التشغيل والخوادم • Microsoft 365 • مضاد فيروسات وجدار ناري مؤسسي",
+  "Office Automation": "أتمتة المكاتب",
+  "Online stores with secure UAE payment gateways, reservations, and customer portals.": "متاجر إلكترونية مع بوابات دفع آمنة بالإمارات، وحجوزات، وبوابات عملاء.",
+  "Online | UAE Integrator": "متصل | متكامل في الإمارات",
+  "Or Send Email": "أو أرسل بريدًا إلكترونيًا",
+  "Our": "حلولنا",
+  "Our Core Mission": "مهمتنا الأساسية",
+  "Our Headquarters": "مقرنا الرئيسي",
+  "PRODUCT CATALOG": "كتالوج المنتجات",
+  "PRODUCTIVITY": "الإنتاجية",
+  "Phone": "الهاتف",
+  "Physical & Digital Protection": "الحماية المادية والرقمية",
+  "Please confirm you're not a robot before sending.": "يرجى تأكيد أنك لست روبوتًا قبل الإرسال.",
+  "PrimeNet AI Assistant": "مساعد برايم نت الذكي",
+  "PrimeNet Solutions FZC - IT, Networking & Security in Sharjah, UAE": "برايم نت سوليوشنز إف زد سي - تكنولوجيا المعلومات والشبكات والأمن في الشارقة، الإمارات",
+  "PrimeNet Solutions FZC â€” Sharjah-based enterprise technology integrator. We design, deploy, and maintain robust networking, security systems, biometrics, and server infrastructure with full UAE regulatory compliance.": "برايم نت سوليوشنز إف زد سي — متكامل تقني مؤسسي مقره الشارقة. نصمم وننشر ونصون بنى تحتية متينة للشبكات وأنظمة الأمن والقياسات الحيوية والخوادم، مع امتثال كامل للمتطلبات التنظيمية بالإمارات.",
+  "PrimeNet Solutions designs, integrates, and sustains enterprise IT environments throughout the United Arab Emirates. Our capabilities span the entire infrastructure spectrum: structured campus networks, high-density server deployments, certified biometric and surveillance access systems, and round-the-clock preventative AMC maintenance engineered for zero unplanned downtime.": "تصمم برايم نت سوليوشنز بيئات تقنية المعلومات المؤسسية وتدمجها وتديمها في جميع أنحاء دولة الإمارات. تغطي قدراتنا الطيف الكامل للبنية التحتية: شبكات الحرم الجامعي الهيكلية، ونشر الخوادم عالية الكثافة، وأنظمة الدخول المعتمدة بالقياسات الحيوية والمراقبة، والصيانة الوقائية على مدار الساعة المصممة لصفر توقف غير مخطط له.",
+  "PrimeNet Solutions provides end-to-end commercial security deployments designed for reliability and round-the-clock protection. We integrate enterprise-grade IP video surveillance, biometric entry barriers, and smart monitoring systems.": "تقدم برايم نت سوليوشنز حلول أمن تجارية متكاملة مصممة للموثوقية والحماية على مدار الساعة. ندمج أنظمة المراقبة المرئية IP المؤسسية، وحواجز الدخول الحيوية، وأنظمة المراقبة الذكية.",
+  "PrimeNet Solutions:": "برايم نت سوليوشنز:",
+  "Privacy": "الخصوصية",
+  "Product": "منتج",
+  "Project": "مشروع",
+  "Reach out for a project estimate, collaboration, or just to say hello.": "تواصل معنا للحصول على تقدير مشروع أو للتعاون أو حتى لإلقاء التحية.",
+  "Resilient SAN/NAS architectures, automated failover clustering, and local storage arrays built to satisfy strict on-soil data residency regulations.": "معماريات SAN/NAS مرنة، وعنقودة فائدة تلقائية، ومصفوفات تخزين محلية تلبي متطلبات إقامة البيانات على الأراضي الوطنية.",
+  "SIRA & Audit Ready": "جاهز لـ SIRA والتدقيق",
+  "SIRA Certified": "معتمد من SIRA",
+  "SIRA Familiarity": "خبرة في متطلبات SIRA",
+  "SIRA-ready IP CCTV, perimeter intrusion deterrence, and enterprise firewalling.": "كاميرات IP جاهزة لـ SIRA، وردع التسلل المحيطي، وجدران نارية مؤسسية.",
+  "SURVEILLANCE": "المراقبة",
+  "Scalable rackmount servers, SAN/NAS enclosures, and NVMe all-flash systems.": "خوادم قابلة للتوسع مثبتة في الرفوف، ووحدات SAN/NAS، وأنظمة تخزين NVMe بالكامل فلاش.",
+  "Scroll FX": "تأثير التمرير",
+  "Security": "الأمن",
+  "Security Architecture": "معمارية الأمن",
+  "Send Message": "إرسال الرسالة",
+  "Server & Data Storage": "الخوادم وتخزين البيانات",
+  "Servers": "الخوادم",
+  "Site surveys, hardware configuration, and 24/7 Annual Maintenance Contracts.": "مسوحات الموقع، وتهيئة الأجهزة، وعقود صيانة سنوية على مدار الساعة.",
+  "Skip to main content": "تخطَّ إلى المحتوى الرئيسي",
+  "Social": "وسائل التواصل",
+  "Software": "البرمجيات",
+  "Software & Licenses": "البرمجيات والتراخيص",
+  "Software Solutions": "حلول البرمجيات",
+  "Sound On": "الصوت مُفعّل",
+  "Muted": "مكتوم",
+  "Tap for sound": "اضغط لتفعيل الصوت",
+  "Specialized": "متخصصة",
+  "Specialized Equipment": "معدات متخصصة",
+  "Speed Gates": "البوابات السريعة",
+  "Start a Conversation": "ابدأ محادثة",
+  "Stay updated on our latest technology solutions, hardware arrivals, and enterprise security insights across the UAE.": "تابع أحدث حلولنا التقنية ووصول الأجهزة الجديدة ورؤى الأمن المؤسسي في الإمارات.",
+  "Stock control, purchase orders, recurring billing, and multi-branch reporting.": "ضبط المخزون، أوامر الشراء، الفوترة المتكررة، والتقارير متعددة الفروع.",
+  "Storage Capabilities": "قدرات التخزين",
+  "Terms": "الشروط",
+  "Thanks! We'll be in touch soon.": "شكرًا! سنتواصل معك قريبًا.",
+  "Tier-1 Partnerships": "شراكات من الدرجة الأولى",
+  "Tier-1 Training": "تدريب من الدرجة الأولى",
+  "Tier-3 SAN": "SAN من المستوى الثالث",
+  "To be the foremost trusted advisor and hardware distributor in Sharjah and the Northern Emiratesâ€”accelerating commercial digital transformation through tier-1 brand alliances and proactive lifecycle maintenance.": "أن نكون المستشار الموثوق الأول وموزع الأجهزة في الشارقة والإمارات الشمالية—تسريع التحول الرقمي التجاري من خلال تحالفات علامات الدرجة الأولى والصيانة الاستباقية لدورة الحياة.",
+  "To provide enterprises, educational institutions, and public sector organizations throughout the Emirates with transparent, future-ready IT infrastructure engineered for maximum uptime, local data residency, and UAE compliance.": "تزويد الشركات والمؤسسات التعليمية والجهات الحكومية في الإمارات ببنية تحتية تقنية شفافة وجاهزة للمستقبل، مصممة لأقصى وقت تشغيل وسيادة بيانات محلية وامتثال للإمارات.",
+  "Turnkey Enterprise Implementations": "تنفيذ مؤسسي جاهز",
+  "UAE Driving License": "رخصة قيادة إماراتية",
+  "UAE Market Impact": "الأثر في سوق الإمارات",
+  "UAE On-Soil Data": "بيانات داخل الإمارات",
+  "UAE Regulatory Ready": "جاهز للامتثال التنظيمي بالإمارات",
+  "VLAN & Routing": "VLAN والتوجيه",
+  "View Catalog": "عرض الكتالوج",
+  "Web Designing": "تصميم المواقع",
+  "Web Solutions": "حلول الويب",
+  "Website Creation & E-Commerce": "إنشاء المواقع والتجارة الإلكترونية",
+  "Welcome to PrimeNet Solutions FZC (Sharjah, UAE). How can our team assist with your enterprise networking, security, or IT infrastructure requirements today?": "مرحبًا بك في برايم نت سوليوشنز إف زد سي (الشارقة، الإمارات). كيف يمكن لفريقنا مساعدتك في متطلبات الشبكات أو الأمن أو البنية التحتية لتقنية المعلومات اليوم؟",
+  "Who We Are": "من نحن",
+  "Why grow your career with PrimeNet Solutions?": "لماذا تنمي مسيرتك مع برايم نت سوليوشنز؟",
+  "With Us": "معنا",
+  "Work alongside certified enterprise architects, access cutting-edge tier-1 brand certifications (Cisco, Hikvision, Microsoft), and enjoy competitive UAE compensation packages.": "اعمل إلى جانب مهندسي معمارية معتمدين، واستفد من شهادات العلامات الدرجة الأولى (Cisco وHikvision وMicrosoft)، واستمتع بحزم تعويض تنافسية في الإمارات.",
+  "Workstations • Enterprise Rack Servers • Laptops • Peripherals": "محطات عمل • خوادم رفوف • لابتوبات • ملحقات",
+  "for all your IT Solutions": "لجميع حلولك التقنية",
+  "remarkable.": "استثنائي.",
+  "© 2026 PrimeNet Solutions FZC. All rights reserved.": "© 2026 برايم نت سوليوشنز إف زد سي. جميع الحقوق محفوظة.",
+  "Ã—": "×",
+  "≤10MB": "≤10 ميجابايت",
+  "24/7 AMC SLA": "اتفاقية صيانة على مدار الساعة",
+  "24/7 SLA Backing": "دعم اتفاقية مستوى الخدمة على مدار الساعة",
+  "Request Quotation": "طلب عرض سعر",
+  "Attach Specs (Optional)": "إرفاق المواصفات (اختياري)",
+  "Send Quotation Request": "إرسال طلب عرض السعر",
+  "Attach Resume / CV *": "إرفاق السيرة الذاتية *",
+  "Submit Application": "إرسال الطلب",
+  "Content not available.": "المحتوى غير متاح.",
+  "Privacy Notice": "إشعار الخصوصية",
+  "Website Terms": "شروط الموقع",
+  "The site collects only what you voluntarily submit via the contact form (name, email, phone, message, and optionally a file attachment). No tracking cookies, analytics scripts, or third-party profiling are used. Data is transmitted only to <code>info@primenetsolutions.ae</code> and is not stored in any database. We do not share, sell, or distribute your information.": "يجمع الموقع فقط ما تقدمه طوعًا عبر نموذج التواصل (الاسم والبريد والهاتف والرسالة وملف اختياري). لا تُستخدم ملفات تتبع أو سكربتات تحليلات أو ملفات تعريف طرف ثالث. تُرسل البيانات فقط إلى <code>info@primenetsolutions.ae</code> ولا تُخزن في أي قاعدة بيانات. لا نشارك بياناتك أو نبيعها أو نوزعها.",
+  "The site collects only what you voluntarily submit via the contact form (name, email, phone, message, and optionally a file attachment). No tracking cookies, analytics scripts, or third-party profiling are used. Data is transmitted only to": "يجمع الموقع فقط ما تقدمه طوعًا عبر نموذج التواصل (الاسم والبريد والهاتف والرسالة وملف اختياري). لا تُستخدم ملفات تتبع أو سكربتات تحليلات أو ملفات تعريف طرف ثالث. تُرسل البيانات فقط إلى",
+  "and is not stored in any database. We do not share, sell, or distribute your information.": "ولا تُخزن في أي قاعدة بيانات. لا نشارك بياناتك أو نبيعها أو نوزعها.",
+  "Content is provided for informational purposes only. Product names and logos belong to their respective owners. Contact links point to verified company channels (<a href=\"mailto:info@primenetsolutions.ae\" class=\"text-accentCyan hover:underline\">info@primenetsolutions.ae</a>, WhatsApp, and telephone). No claims are made beyond the company's actual capabilities.": "يُقدّم المحتوى لأغراض إعلامية فقط. أسماء المنتجات وشعاراتها ملك لأصحابها. تشير روابط التواصل إلى القنوات الرسمية الموثّقة للشركة (<a href=\"mailto:info@primenetsolutions.ae\" class=\"text-accentCyan hover:underline\">info@primenetsolutions.ae</a> وواتساب والهاتف). لا تُقدّم أي ادعاءات تتجاوز قدرات الشركة الفعلية.",
+  "Content is provided for informational purposes only. Product names and logos belong to their respective owners. Contact links point to verified company channels (": "يُقدّم المحتوى لأغراض إعلامية فقط. أسماء المنتجات وشعاراتها ملك لأصحابها. تشير روابط التواصل إلى القنوات الرسمية الموثّقة للشركة (",
+  ", WhatsApp, and telephone). No claims are made beyond the company's actual capabilities.": " وواتساب والهاتف). لا تُقدّم أي ادعاءات تتجاوز قدرات الشركة الفعلية.",
+  "Downloading PrimeNet Solutions Brochure PDF...": "جارٍ تنزيل كتيّب برايم نت سوليوشنز PDF...",
+  "Downloading brochure…": "جارٍ تنزيل الكتيّب…",
+  "Only PDF, JPEG and PNG files are allowed.": "يُسمح فقط بملفات PDF وJPEG وPNG.",
+  "File exceeds 10MB limit. Please attach a smaller file.": "حجم الملف يتجاوز 10 ميجابايت. يرجى إرفاق ملف أصغر.",
+  "Attached: ": "تم الإرفاق: ",
+  "Please fill in all fields (Name, Email, Phone, Message).": "يرجى تعبئة جميع الحقول (الاسم، البريد، الهاتف، الرسالة).",
+  "Email draft opened for info@primenetsolutions.ae": "تم فتح مسودة بريد إلى info@primenetsolutions.ae",
+  "Your email draft is ready in your email app. Just press send.": "مسودة بريدك جاهزة في تطبيق البريد. اضغط إرسال فقط.",
+  "Verification is still loading. Please try again in a moment.": "التحقق لا يزال قيد التحميل. يرجى المحاولة بعد لحظات.",
+  "Please tick \"I'm not a robot\" before sending.": "يرجى تحديد \"أنا لست روبوتًا\" قبل الإرسال.",
+  "Sending inquiry to info@primenetsolutions.ae...": "جارٍ إرسال الاستفسار إلى info@primenetsolutions.ae...",
+  "Inquiry sent successfully!": "تم إرسال الاستفسار بنجاح!",
+  "Inquiry sent successfully to info@primenetsolutions.ae!": "تم إرسال الاستفسار بنجاح إلى info@primenetsolutions.ae!",
+  "Click the Sound button (bottom-left) to enable scroll sound": "انقر زر الصوت (أسفل اليمين) لتفعيل صوت التمرير",
+  "Preparing...": "جارٍ التحضير...",
+  "Sending...": "جارٍ الإرسال...",
+  "None": "لا شيء",
+  "Quotation Request - PrimeNet Solutions": "طلب عرض سعر - برايم نت سوليوشنز",
+  "Hello PrimeNet Team,\n\nCompany: \nPhone: \nProject Scope / BOQ: ": "مرحبًا فريق برايم نت،\n\nالشركة: \nالهاتف: \nنطاق المشروع / جدول الكميات: ",
+  "General Application": "طلب عام",
+  "Language": "اللغة",
+  "Enterprise Networking": "شبكات المؤسسات",
+  "Security & Biometrics": "الأمن والقياسات الحيوية",
+  "Servers & Storage": "الخوادم والتخزين",
+  "Websites & E-Commerce": "المواقع والتجارة الإلكترونية",
+  "Project Showcase": "معرض المشاريع",
+  "AMC & Managed Support": "الصيانة والدعم المُدار",
+  "We design and deploy enterprise networking across the UAE â€” structured fiber and copper cabling, managed L2/L3 switching, routing, secure Wi-Fi 6/6E and campus backbone integration, engineered for 99.9% uptime.": "نصمم وننشر شبكات المؤسسات في الإمارات — كابلات ألياف ونحاس هيكلية، ومحولات L2/L3 مُدارة، وتوجيه، وواي فاي 6/6E آمن، وربط العمود الفقري للحرم الجامعي، مصممة لوقت تشغيل 99.9%.",
+  "Our SIRA-compliant security division delivers IP CCTV surveillance, biometric access control, turnstiles, time-attendance, intrusion detection and encrypted audit trails for commercial and federal sites across Dubai, Sharjah and the wider UAE.": "يقدم قسم الأمن المتوافق مع SIRA مراقبة IP، وتحكمًا بالدخول الحيوي، وبوابات دوّارة، ونظام حضور وانصراف، وكشف تسلل، وسجلات تدقيق مشفرة للمواقع التجارية والحكومية في دبي والشارقة وسائر الإمارات.",
+  "Enterprise compute and storage â€” rack and tower servers, SAN/NAS arrays, virtualization hosts and certified memory or power supplies, supplied with manufacturer warranty and rapid dispatch across the Emirates.": "حوسبة وتخزين مؤسسي — خوادم رفوف وأبراج، ومصفوفات SAN/NAS، ومضيفات افتراضية، وذاكرة أو مصادر طاقة معتمدة، مع ضمان الشركة المصنعة وشحن سريع في الإمارات.",
+  "We design and build fast, responsive corporate websites, e-commerce stores and customer portals â€” secure UAE payment gateway integration, SEO-ready structure, domain and hosting management, plus ongoing care plans covering updates, backups and security patches.": "نصمم ونبني مواقع شركة سريعة ومتجاوبة ومتاجر إلكترونية وبوابات عملاء — ربط بوابات دفع آمنة بالإمارات، وهيكلة جاهزة لتحسين محركات البحث، وإدارة نطاق واستضافة، وخطط رعاية تشمل التحديثات والنسخ الاحتياطي وتحديثات الأمان.",
+  "Selection, licensing and deployment of invoicing and accounting platforms â€” FTA-compliant VAT invoicing, Arabic/English templates, inventory and purchase-order control, and multi-branch reporting, delivered with data migration, staff training and ongoing AMC support.": "اختيار وترخيص ونشر منصات الفوترة والمحاسبة — فوترة ضريبة القيمة المضافة وفق هيئة الزكاة والضريبة والجمارك، وقوالب عربية/إنجليزية، وضبط المخزون وأوامر الشراء، وتقارير متعددة الفروع، مع ترحيل بيانات وتدريب موظفين ودعم صيانة مستمر.",
+  "Our Project Showcase highlights three turnkey deployments: an Active 10G enterprise backbone (Cat6A/SFP+, redundant switching fabrics), Biometric Access Intelligence (facial AI, speed gates, encrypted audit trails) and Enterprise Compute & Storage Arrays (all-flash NVMe, Tier-3 SAN). Each card opens a solution-specification request and a WhatsApp line for that deployment.": "يبرز معرض مشاريعنا ثلاثة تنفيذات جاهزة: عمود فقري مؤسسي بسرعة 10G (Cat6A/SFP+ ومصفوفات تحويل زائدة)، والذكاء الحيوي للدخول (تعرف على الوجوه، بوابات سريعة، سجلات مشفرة)، والحوسبة ومصفوفات التخزين المؤسسية (NVMe بالكامل فلاش، SAN من المستوى الثالث). تفتح كل بطاقة طلب مواصفات وخط تواصل عبر واتساب.",
+  "24/7 mission-critical maintenance contracts â€” preventative site surveys, hardware replacement, firmware and configuration updates, plus UAE regulatory re-certification support with defined response SLAs.": "عقود صيانة حرجة على مدار الساعة — مسوحات وقائية، واستبدال أجهزة، وتحديثات برمجيات وتهيئة، ودعم إعادة الاعتماد التنظيمي بالإمارات مع مستويات استجابة محددة.",
+  "Book Site Survey": "حجز معاينة موقع",
+  "Submit BOQ": "إرسال جدول الكميات",
+  "SIRA Compliance Audit": "تدقيق امتثال SIRA",
+  "Technical Specs": "المواصفات الفنية",
+  "Storage Sizing": "تحديد حجم التخزين",
+  "Hardware Spares": "قطع غيار الأجهزة",
+  "Plan a Design Brief": "إعداد موجز تصميم",
+  "Discuss Care Plan": "مناقشة خطة الرعاية",
+  "Book a Demo": "حجز عرض توضيحي",
+  "Migration Support": "دعم الترحيل",
+  "View Showcase": "عرض المشاريع",
+  "Deployment Specs": "مواصفات التنفيذ",
+  "Request AMC Quote": "طلب عرض صيانة",
+  "Urgent Support": "دعم عاجل",
+  "Schedule Site Audit": "جدولة تدقيق الموقع",
+  "Email Sales Desk": "مراسلة المبيعات",
+  "WhatsApp Sales": "واتساب المبيعات",
+  "Email BOQ": "إرسال جدول الكميات",
+  "Send on WhatsApp": "إرسال عبر واتساب",
+  "Download Specs (PDF)": "تنزيل المواصفات (PDF)",
+  "Request Datasheet": "طلب ورقة بيانات",
+  "Download Brochure (PDF)": "تنزيل الكتيّب (PDF)",
+  "Open Page 5": "فتح الصفحة 5",
+  "Open Project Showcase": "فتح معرض المشاريع",
+  "Open WhatsApp": "فتح واتساب",
+  "Book on WhatsApp": "الحجز عبر واتساب",
+  "Use Contact Form": "استخدام نموذج التواصل",
+  "Request Audit": "طلب تدقيق",
+  "Discuss on WhatsApp": "المناقشة عبر واتساب",
+  "Check Part Number": "التحقق من رقم القطعة",
+  "Raise Urgent Ticket": "فتح تذكرة عاجلة",
+  "Open Brochure â€” Page 5": "فتح الكتيّب — الصفحة 5",
+  "See the site card": "عرض بطاقة الموقع",
+  "Continue on WhatsApp": "المتابعة عبر واتساب",
+  "Open Contact Form": "فتح نموذج التواصل",
+  "I would like to request a formal quotation.": "أود طلب عرض سعر رسمي.",
+  "I would like a quotation for this solution.": "أود عرض سعر لهذا الحل.",
+  "I want to submit a BOQ for pricing.": "أود إرسال جدول كميات للحصول على الأسعار.",
+  "I would like to view technical specifications.": "أود الاطلاع على المواصفات الفنية.",
+  "I would like the company brochure.": "أود الحصول على كتيّب الشركة.",
+  "Show me your project showcase.": "أرني معرض مشاريعكم.",
+  "I would like to continue on WhatsApp.": "أود المتابعة عبر واتساب.",
+  "I would like to book a technical site survey.": "أود حجز معاينة فنية للموقع.",
+  "I would like a SIRA compliance audit.": "أود تدقيق امتثال SIRA.",
+  "I need help sizing storage and compute.": "أحتاج مساعدة في تحديد حجم التخزين والحوسبة.",
+  "I want to check hardware spares availability.": "أود التحقق من توفر قطع الغيار.",
+  "I need urgent technical support.": "أحتاج دعمًا تقنيًا عاجلًا.",
+  "Please send your project scope or Bill of Quantities (BOQ) directly to our sales desk, or click below to launch a pre-formatted email.": "يرجى إرسال نطاق مشروعك أو جدول الكميات إلى قسم المبيعات، أو انقر أدناه لفتح بريد جاهز.",
+  "Our sales engineers will prepare a formal quotation against your scope. Share your BOQ or requirements using either channel below.": "سيعد مهندسو المبيعات عرض سعر رسميًا حسب نطاقك. شارك جدول الكميات أو متطلباتك عبر إحدى القناتين أدناه.",
+  "Send your Bill of Quantities as an attachment or paste the line items into the email below â€” we revert with itemised pricing and lead times.": "أرسل جدول الكميات مرفقًا أو الصق البنود في البريد أدناه — وسنرد بأسعار تفصيلية ومدد تسليم.",
+  "Our brochure and datasheets cover the product families we integrate. Download the PDF below, or ask our engineers for a specific datasheet.": "يغطي كتيّبنا وأوراق البيانات عائلات المنتجات التي ندمجها. نزّل ملف PDF أدناه أو اطلب ورقة بيانات محددة من مهندسينا.",
+  "The PrimeNet Solutions brochure covers networking, SIRA-compliant security, server and storage, and AMC services â€” and page 5 adds our Digital Services: Website Creation & E-Commerce plus Invoicing & Accounting Software (PNS Pro).": "يغطي كتيّب برايم نت سوليوشنز الشبكات والأمن المتوافق مع SIRA والخوادم والتخزين والصيانة — وتضيف الصفحة 5 خدماتنا الرقمية: إنشاء المواقع والتجارة الإلكترونية وبرامج الفوترة والمحاسبة (PNS Pro).",
+  "The Project Showcase section on the homepage features three turnkey implementations delivered across UAE corporate and public-sector sites â€” open it below, or jump straight to a quotation.": "يعرض قسم معرض المشاريع في الصفحة الرئيسية ثلاثة تنفيذات جاهزة نُفذت في مواقع شركات وقطاع عام بالإمارات — افتحه أدناه أو انتقل مباشرة إلى طلب عرض السعر.",
+  "You can reach our Sharjah sales desk directly on WhatsApp using the button below.": "يمكنك التواصل مع مكتب المبيعات في الشارقة مباشرة عبر واتساب باستخدام الزر أدناه.",
+  "We schedule site surveys across the UAE within two working days. Share the site location and preferred slot and our engineer will confirm.": "نجدول معاينات الموقع في الإمارات خلال يومي عمل. شارك موقع الموقع والوقت المفضل وسيؤكد مهندسنا.",
+  "Our team reviews camera placement, storage retention, access control zoning and documentation against SIRA requirements, then issues a remediation list.": "يراجع فريقنا مواضع الكاميرات ومدة الاحتفاظ بالتسجيلات ومناطق التحكم بالدخول والوثائق مقابل متطلبات SIRA، ثم يصدر قائمة بالإجراءات التصحيحية.",
+  "Share your workload profile â€” capacity, IOPS, retention and growth â€” and we will propose a right-sized server and storage configuration.": "شارك ملف حمل العمل لديك — السعة وIOPS وفترة الاحتفاظ والنمو — وسنقترح تهيئة خادم وتخزين مناسبة.",
+  "We hold and source enterprise spares including drives, PSUs, memory and transceivers. Send the part number for a stock and lead-time check.": "نتوفر ونورد قطع غيار مؤسسية تشمل الأقراص ومصادر الطاقة والذاكرة ووحدات الإرسال. أرسل رقم القطعة للتحقق من المخزون ومدة التوريد.",
+  "For contract customers, raise an urgent ticket on WhatsApp with your site name and a short fault description â€” our on-call engineer responds as per your SLA.": "لعملاء العقود، افتح تذكرة عاجلة عبر واتساب مع اسم الموقع ووصف مختصر للعطل — يستجيب مهندسنا المناوب وفق اتفاقية مستوى الخدمة."
+};
+  var ATTR = {
+  "placeholder": {
+    "Ask about IT, servers, AMC...": "اسأل عن تقنية المعلومات والخوادم والصيانة...",
+    "How can we help?": "كيف يمكننا مساعدتك؟",
+    "Your Name": "اسمك",
+    "your@email.com": "بريدك الإلكتروني"
+  },
+  "aria-label": {
+    "Chat on WhatsApp": "الدردشة عبر واتساب",
+    "Close": "إغلاق",
+    "Close chat": "إغلاق الدردشة",
+    "Close modal": "إغلاق النافذة",
+    "Enable scroll sound": "تفعيل صوت التمرير",
+    "Mute scroll sound": "كتم صوت التمرير",
+    "Muted": "مكتوم",
+    "Tap for sound": "اضغط لتفعيل الصوت",
+    "Language": "اللغة",
+    "Loading PrimeNet Solutions": "جارٍ تحميل برايم نت سوليوشنز",
+    "Main Navigation": "التنقل الرئيسي",
+    "Next Slide": "الشريحة التالية",
+    "Open chat": "فتح الدردشة",
+    "Open contact options": "فتح خيارات التواصل",
+    "Previous Slide": "الشريحة السابقة",
+    "PrimeNet Home": "الرئيسية - برايم نت",
+    "Send message": "إرسال رسالة",
+    "Slide 1": "الشريحة 1",
+    "Slide 2": "الشريحة 2",
+    "Slide 3": "الشريحة 3",
+    "Toggle menu": "تبديل القائمة"
+  },
+  "title": {
+    "Apply via WhatsApp HR": "التقديم عبر واتساب - الموارد البشرية",
+    "Chat on WhatsApp": "الدردشة عبر واتساب",
+    "Contact options": "خيارات التواصل",
+    "Enable scroll sound": "تفعيل صوت التمرير",
+    "Mute scroll sound": "كتم صوت التمرير",
+    "Inquire on WhatsApp": "استفسار عبر واتساب",
+    "Open AI Assistant": "فتح المساعد الذكي",
+    "PrimeNet Solutions Sharjah Location": "موقع برايم نت سوليوشنز في الشارقة",
+    "Remove file": "إزالة الملف",
+    "WhatsApp Inquiry": "استفسار عبر واتساب"
+  },
+  "alt": {
+    "Cyber biometric security scanner visualization": "تصور لماسح أمن حيوي",
+    "Enterprise data storage server arrays with glowing fiber lines": "مصفوفات تخزين خوادم مؤسسية مع مسارات ألياف مضيئة",
+    "Enterprise network cabling and server patch bays": "كابلات شبكات مؤسسية ولوحات توصيل خوادم"
+  }
+};
+  var UI = {
+  "title": "PrimeNet Solutions FZC - IT, Networking & Security in Sharjah, UAE",
+  "titleAr": "برايم نت سوليوشنز إف زد سي - تكنولوجيا المعلومات والشبكات والأمن في الشارقة، الإمارات",
+  "desc": "Sharjah IT integrator for enterprise networking, SIRA-compliant CCTV & biometrics, servers and AMC support across Dubai, Abu Dhabi and the UAE.",
+  "descAr": "متكامل تقني في الشارقة لشبكات المؤسسات والكاميرات والقياسات الحيوية المتوافقة مع SIRA والخوادم والصيانة في دبي وأبوظبي وسائر الإمارات."
+};
+  var currentLang = 'en';
+  var textOriginals = new WeakMap();
+  var attrOriginals = new WeakMap();
+
+  function norm(s) { return String(s).replace(/\s+/g, ' ').trim(); }
+
+  function wrap(original, replacement) {
+    var m = /^(\s*)([\s\S]*?)(\s*)$/.exec(original);
+    return m ? m[1] + replacement + m[3] : replacement;
+  }
+
+  function ignored(node) {
+    var el = node.nodeType === 3 ? node.parentElement : node;
+    if (!el || !el.closest) return false;
+    return !!el.closest('script, style, noscript, [data-no-i18n]');
+  }
+
+  function translateText(node) {
+    if (!node.nodeValue || !node.nodeValue.trim() || ignored(node)) return;
+    var raw = node.nodeValue;
+    var key = norm(raw);
+    if (currentLang === 'ar') {
+      var val = TEXT[key];
+      if (val && val !== key) {
+        if (!textOriginals.has(node)) textOriginals.set(node, raw);
+        var next = wrap(textOriginals.get(node), val);
+        if (next !== raw) node.nodeValue = next;
+      }
+    } else if (textOriginals.has(node)) {
+      node.nodeValue = textOriginals.get(node);
+      textOriginals.delete(node);
+    }
+  }
+
+  function translateAttrs(el) {
+    if (!el || el.nodeType !== 1 || ignored(el)) return;
+    ['placeholder', 'aria-label', 'title', 'alt'].forEach(function (a) {
+      var raw = el.getAttribute(a);
+      if (!raw || !raw.trim()) return;
+      var key = norm(raw);
+      if (currentLang === 'ar') {
+        var val = (ATTR[a] || {})[key];
+        if (val && val !== key) {
+          if (!attrOriginals.has(el)) attrOriginals.set(el, {});
+          var store = attrOriginals.get(el);
+          if (store[a] === undefined) store[a] = raw;
+          var next = wrap(store[a], val);
+          if (el.getAttribute(a) !== next) el.setAttribute(a, next);
+        }
+      } else if (attrOriginals.has(el)) {
+        var st = attrOriginals.get(el);
+        if (st[a] !== undefined) { el.setAttribute(a, st[a]); delete st[a]; }
+      }
+    });
+  }
+
+  function walk(root) {
+    if (!root) return;
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (w.nextNode()) nodes.push(w.currentNode);
+    nodes.forEach(translateText);
+    var els = root.nodeType === 1 ? [root] : [];
+    if (root.querySelectorAll) {
+      els = els.concat(Array.prototype.slice.call(root.querySelectorAll('*')));
+    }
+    els.forEach(translateAttrs);
+  }
+
+  function setMeta() {
+    var ar = currentLang === 'ar';
+    document.title = ar ? UI.titleAr : UI.title;
+    var selectors = [
+      ['meta[name="description"]', ar ? UI.descAr : UI.desc],
+      ['meta[property="og:title"]', ar ? UI.titleAr : UI.title],
+      ['meta[property="og:description"]', ar ? UI.descAr : UI.desc],
+      ['meta[name="twitter:title"]', ar ? UI.titleAr : UI.title],
+      ['meta[name="twitter:description"]', ar ? UI.descAr : UI.desc]
+    ];
+    selectors.forEach(function (pair) {
+      var el = document.querySelector(pair[0]);
+      if (el) el.setAttribute('content', pair[1]);
+    });
+  }
+
+  function updateSwitcher() {
+    var buttons = document.querySelectorAll('[data-lang]');
+    Array.prototype.forEach.call(buttons, function (b) {
+      var active = b.getAttribute('data-lang') === currentLang;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  window.setLang = function (lang) {
+    if (lang !== 'ar' && lang !== 'en') return;
+    currentLang = lang;
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    setMeta();
+    walk(document.body);
+    updateSwitcher();
+    try { localStorage.setItem('pns-lang', lang); } catch (e) {}
+    try {
+      var url = new URL(window.location.href);
+      if (lang === 'ar') url.searchParams.set('lang', 'ar');
+      else url.searchParams.delete('lang');
+      history.replaceState(null, '', url);
+    } catch (e) {}
+  };
+
+  var initial = 'en';
+  try {
+    var q = new URLSearchParams(window.location.search).get('lang');
+    var stored = localStorage.getItem('pns-lang');
+    initial = (q === 'ar' || (!q && stored === 'ar')) ? 'ar' : 'en';
+  } catch (e) {}
+  window.setLang(initial);
+
+  if (window.MutationObserver) {
+    var observer = new MutationObserver(function (muts) {
+      if (currentLang !== 'ar') return;
+      muts.forEach(function (m) {
+        if (m.type === 'characterData') { translateText(m.target); return; }
+        if (m.type === 'attributes') { translateAttrs(m.target); return; }
+        Array.prototype.forEach.call(m.addedNodes, function (n) {
+          if (n.nodeType === 3) translateText(n);
+          else if (n.nodeType === 1) walk(n);
+        });
+      });
+    });
+    observer.observe(document.body, {
+      childList: true, subtree: true, characterData: true,
+      attributes: true, attributeFilter: ['placeholder', 'aria-label', 'title', 'alt']
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
